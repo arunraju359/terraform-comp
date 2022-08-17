@@ -1,6 +1,7 @@
 resource "aws_instance" "test" {
   ami           = "ami-090fa75af13c156b4"
   instance_type = "t2.micro"
+  count = length(var.PRIVATE_CIDR)
   subnet_id   = element (aws_subnet.private.*.id[0])
 
 
