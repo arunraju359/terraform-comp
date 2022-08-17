@@ -11,6 +11,7 @@ resource "aws_subnet" "public" {
 
 
 resource "aws_subnet" "private" {
+vpc_id     = aws_vpc.main.id
 count = length(var.PRIVATE_CIDR)
 
 cidr_block = element (var.PRIVATE_CIDR, count.index)
