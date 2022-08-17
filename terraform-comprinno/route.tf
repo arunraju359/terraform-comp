@@ -24,12 +24,13 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.*.id
+  count = length(var.PUBLIC_CIDR)
+  subnet_id      = element (var.PUBLIC_CIDR, count.index)
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "private" {
-  subnet_id      = aws_subnet.private.*.id
-  gateway_id = aws_nat_gateway.ngw.id
+  count = length(var.PRIVATE_CIDR)
+  subnet_id      = element (var.PRIVATE_CIDR, count.index)
   route_table_id = aws_route_table.private.id
 }
